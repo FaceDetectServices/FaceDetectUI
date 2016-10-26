@@ -14,7 +14,7 @@
 
     <h:form id="form" enctype="multipart/form-data">
         <br/>
-        <p:outputLabel value="Face API and Emotional API Sample Application with Spring Cloud"/>
+        <p:outputLabel value="Face API and Emotional API Sample Application with Spring Boot and Spring Cloud"/>
         <br/><br/>
         <p:photoCam update="uploaded" id="photo" widgetVar="pc" listener="#{photoup.sendPhoto}" photoHeight="600" photoWidth="800"/><br/>
         <p:commandButton  id="button" type="button" value="Capture" onclick="PF('pc').capture()" icon="fa fa-camera" update="uploaded" oncomplete="showData()"/>
