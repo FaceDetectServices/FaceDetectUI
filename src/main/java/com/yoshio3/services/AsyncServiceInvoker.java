@@ -2,7 +2,6 @@ package com.yoshio3.services;
 
 import java.util.concurrent.CompletableFuture;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
@@ -11,10 +10,14 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class AsyncServiceInvoker {
-	@Autowired
-	FaceDetectService faceDetectService;
-	@Autowired
-	EmotionService emotionService;
+	private final FaceDetectService faceDetectService;
+	private final EmotionService emotionService;
+
+	public AsyncServiceInvoker(FaceDetectService faceDetectService,
+			EmotionService emotionService) {
+		this.faceDetectService = faceDetectService;
+		this.emotionService = emotionService;
+	}
 
 	@Async
 	public CompletableFuture<FaceAttributes> getFaceInfo(String pictURI) {

@@ -23,12 +23,11 @@ import java.util.concurrent.ExecutionException;
 import org.primefaces.event.CaptureEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.annotation.RequestScope;
 
 import com.yoshio3.services.AsyncServiceInvoker;
 import com.yoshio3.services.StorageService;
-import org.springframework.web.context.annotation.RequestScope;
 
 /**
  *
@@ -58,14 +57,16 @@ public class PhotoUploader implements Serializable {
 	private Double surprise;
 	private Double age;
 	private String gender;
-
-	@Autowired
-	AsyncServiceInvoker serviceInvoker;
-
-	@Autowired
-	StorageService storageService;
-
 	private String fileURL;
+
+	private final AsyncServiceInvoker serviceInvoker;
+	private final StorageService storageService;
+
+	public PhotoUploader(AsyncServiceInvoker serviceInvoker,
+			StorageService storageService) {
+		this.serviceInvoker = serviceInvoker;
+		this.storageService = storageService;
+	}
 
 	public void sendPhoto(CaptureEvent captureEvent) {
 		// try {

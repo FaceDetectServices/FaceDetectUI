@@ -4,7 +4,6 @@ import java.net.URI;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
@@ -19,8 +18,11 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 @Component
 public class FaceDetectService {
 	private final Logger log = LoggerFactory.getLogger(FaceDetectService.class);
-	@Autowired
-	RestTemplate restTemplate;
+	private final RestTemplate restTemplate;
+
+	public FaceDetectService(RestTemplate restTemplate) {
+		this.restTemplate = restTemplate;
+	}
 
 	@HystrixCommand(fallbackMethod = "getFaceInfoFallback")
 	public FaceAttributes getFaceInfo(String pictURI) {
