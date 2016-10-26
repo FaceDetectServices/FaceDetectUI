@@ -9,6 +9,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
+
 /**
  *
  * @author Yoshio Terada
@@ -20,7 +22,7 @@ public class FaceDetectService {
 	@Autowired
 	RestTemplate restTemplate;
 
-	// @HystrixCommand(fallbackMethod = "getFaceInfoFallback")
+	@HystrixCommand(fallbackMethod = "getFaceInfoFallback")
 	public FaceAttributes getFaceInfo(String pictURI) {
 		log.info("start get face => {}", pictURI);
 		URI uri = UriComponentsBuilder

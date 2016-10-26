@@ -5,6 +5,7 @@ applications:
   path: target/facedetectui-0.0.1-SNAPSHOT.jar
   services:
   - service-registry
+  - circuit-breaker-dashboard
   - storage-service
   env:
     TRUST_CERTS: api.system.ytpcf.ik.am
