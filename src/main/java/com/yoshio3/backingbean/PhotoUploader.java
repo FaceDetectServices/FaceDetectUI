@@ -100,7 +100,7 @@ public class PhotoUploader implements Serializable {
 			CompletableFuture.allOf(f, e).get();
 		}
 		catch (InterruptedException | ExecutionException ex) {
-			log.error("Service call failed!", e);
+			log.error("Service call failed!", ex);
 		}
 	}
 
