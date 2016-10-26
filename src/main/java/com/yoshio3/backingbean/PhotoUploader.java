@@ -19,44 +19,33 @@ import java.io.Serializable;
 import java.util.UUID;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
-import java.util.logging.Logger;
 
 import org.primefaces.event.CaptureEvent;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.yoshio3.services.AsyncServiceInvoker;
 import com.yoshio3.services.StorageService;
 
-//import java.util.concurrent.ExecutionException;
-//import java.util.concurrent.Future;
-//import java.util.logging.Level;
-//import javax.inject.Inject;
-//import javax.ws.rs.core.Response;
-
-//import com.yoshio3.services.EmotionService;
-//import com.yoshio3.services.FaceDetectService;
-//import com.yoshio3.services.StorageService;
-//import com.yoshio3.services.entities.EmotionResponseJSONBody;
-//import com.yoshio3.services.entities.FaceDetectResponseJSONBody;
-
 /**
  *
  * @author Yoshio Terada
+ * @author Toshiaki Maki
  */
 @Component("photoup")
-@Scope("request")
+@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
 public class PhotoUploader implements Serializable {
 
-	private static final Logger LOGGER = Logger.getLogger(PhotoUploader.class.getName());
+	private static final Logger log = LoggerFactory.getLogger(PhotoUploader.class);
 
 	// Please change following 4 lines (Blob URL)
 	protected final static String UPLOAD_DIRECTORY_NAME_OF_BLOB = "uploaded";
 	private final static String AZURE_BLOG_UPLOAD_URL = "https://yoshiofileup.blob.core.windows.net/"
 			+ UPLOAD_DIRECTORY_NAME_OF_BLOB + "/";
-	private final static String EMOTIONAL_API_SUBSCRIPTION = "********************************";
-	private final static String FACE_API_SUBSCRIPTION = "********************************";
 
 	private final static String IMAGE_FORMAT_EXTENSION = ".jpg";
 
@@ -91,11 +80,13 @@ public class PhotoUploader implements Serializable {
 		fileURL = AZURE_BLOG_UPLOAD_URL + fileName;
 		CompletableFuture<Void> f = serviceInvoker.getFaceInfo(fileURL)
 				.thenAccept(face -> {
+					log.info("face => {}", face);
 					this.age = face.getAge();
 					this.gender = face.getGender();
 				});
 		CompletableFuture<Void> e = serviceInvoker.getEmotionInfo(fileURL)
 				.thenAccept(emotion -> {
+					log.info("emotion => {}", emotion);
 					this.anger = emotion.getAnger();
 					this.contempt = emotion.getContempt();
 					this.disgust = emotion.getDisgust();
@@ -109,9 +100,8 @@ public class PhotoUploader implements Serializable {
 			CompletableFuture.allOf(f, e).get();
 		}
 		catch (InterruptedException | ExecutionException ex) {
-			ex.printStackTrace();
+			log.error("Service call failed!", e);
 		}
-		// System.out.println(faceDetectService.getFaceInfo("https://yoshiofileup.blob.core.windows.net/uploaded/5a0cbbcf-5645-4945-bf76-488cae3ecdfc.jpg"));
 	}
 
 	public String getGender() {

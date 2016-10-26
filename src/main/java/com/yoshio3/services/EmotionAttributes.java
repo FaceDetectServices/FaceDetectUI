@@ -1,5 +1,8 @@
 package com.yoshio3.services;
 
+/**
+ * @author Toshiaki Maki
+ */
 public class EmotionAttributes {
 	private Double anger;
 	private Double contempt;

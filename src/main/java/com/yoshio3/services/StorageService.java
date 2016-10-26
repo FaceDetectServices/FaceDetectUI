@@ -42,6 +42,7 @@ import com.microsoft.azure.storage.blob.*;
 /**
  *
  * @author Yoshio Terada
+ * @author Toshiaki Maki
  */
 @Component
 public class StorageService implements Serializable {
@@ -53,7 +54,7 @@ public class StorageService implements Serializable {
 
 	private CloudBlobClient blobClient;
 
-    // Azure Storage サービスに接続するためのキー
+	// Azure Storage サービスに接続するためのキー
 	@Value("${vcap.services.storage-service.credentials.accountName:デフォルト値}")
 	String accountName;
 	@Value("${vcap.services.storage-service.credentials.accountKey:デフォルト値}")
@@ -116,10 +117,11 @@ public class StorageService implements Serializable {
 	public void uploadFile(byte[] file, String fileName) {
 		CloudBlobContainer container;
 		try {
+			LOGGER.info(() -> "Uploading... " + fileName);
 			container = blobClient.getContainerReference(CONTAINER_NAME_FOR_UPLOAD);
 			CloudBlockBlob blob = container.getBlockBlobReference(fileName);
-
 			blob.upload(new ByteArrayInputStream(file), file.length);
+			LOGGER.info(() -> "Uploaded " + fileName);
 		}
 		catch (URISyntaxException | StorageException ex) {
 			LOGGER.log(Level.SEVERE, "", ex);

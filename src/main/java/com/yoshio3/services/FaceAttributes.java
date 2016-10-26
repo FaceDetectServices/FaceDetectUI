@@ -2,6 +2,9 @@ package com.yoshio3.services;
 
 import java.io.Serializable;
 
+/**
+ * @author Toshiaki Maki
+ */
 public class FaceAttributes implements Serializable {
 	private String gender;
 	private Double age;

@@ -24,9 +24,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 import com.sun.faces.config.FacesInitializer;
 
-//import org.springframework.cloud.client.circuitbreaker.EnableCircuitBreaker;
-//import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-
+/**
+ *
+ * @author Toshiaki Maki
+ */
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
