@@ -1,0 +1,10 @@
+applications:
+- name: FaceDetectUI
+  buildpack: java_buildpack_offline
+  memory: 1G
+  path: target/facedetectui-0.0.1-SNAPSHOT.jar
+  services:
+  - service-registry
+  - storage-service
+  env:
+    TRUST_CERTS: api.system.ytpcf.ik.am
