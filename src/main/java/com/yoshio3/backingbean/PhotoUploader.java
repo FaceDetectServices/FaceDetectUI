@@ -24,12 +24,11 @@ import org.primefaces.event.CaptureEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
 
 import com.yoshio3.services.AsyncServiceInvoker;
 import com.yoshio3.services.StorageService;
+import org.springframework.web.context.annotation.RequestScope;
 
 /**
  *
@@ -37,7 +36,7 @@ import com.yoshio3.services.StorageService;
  * @author Toshiaki Maki
  */
 @Component("photoup")
-@Scope(value = "request", proxyMode = ScopedProxyMode.TARGET_CLASS)
+@RequestScope
 public class PhotoUploader implements Serializable {
 
 	private static final Logger log = LoggerFactory.getLogger(PhotoUploader.class);
