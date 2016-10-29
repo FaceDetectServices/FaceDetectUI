@@ -5,6 +5,7 @@ import java.net.URI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -37,4 +38,15 @@ public class FaceDetectService {
 		return new FaceAttributes("??", -100.0);
 	}
 
+	public void kill() {
+		log.info("Kill Face Detect API");
+		URI uri = UriComponentsBuilder.fromHttpUrl("http://FaceDetectService/api/kill")
+				.build().toUri();
+		try {
+			restTemplate.getForObject(uri, Void.class);
+		}
+		catch (RestClientException e) {
+			log.info("Ignore exception => message = {}", e.getMessage());
+		}
+	}
 }

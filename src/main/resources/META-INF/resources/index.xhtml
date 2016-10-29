@@ -1,5 +1,6 @@
 <?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
@@ -16,8 +17,10 @@
         <br/>
         <p:outputLabel value="Face API and Emotional API Sample Application with Spring Boot and Spring Cloud"/>
         <br/><br/>
-        <p:photoCam update="uploaded" id="photo" widgetVar="pc" listener="#{photoup.sendPhoto}" photoHeight="600" photoWidth="800"/><br/>
-        <p:commandButton  id="button" type="button" value="Capture" onclick="PF('pc').capture()" icon="fa fa-camera" update="uploaded" oncomplete="showData()"/>
+        <p:photoCam update="uploaded" id="photo" widgetVar="pc" listener="#{photoup.sendPhoto}" photoHeight="600"
+                    photoWidth="800"/><br/>
+        <p:commandButton id="button" type="button" value="Capture" onclick="PF('pc').capture()" icon="fa fa-camera"
+                         update="uploaded" oncomplete="showData()"/>
 
         <p:panel id="uploaded" header="アップロードされた画像の解析" style="margin-bottom:20px">
             <h:panelGrid columns="3" cellpadding="10">
@@ -62,5 +65,11 @@
 
         </p:panel>
     </h:form>
+
+
+    <p:commandButton value="Face Detect API 切断" action="#{loadGenerator.killFaceDetectService()}"/>
+    <p:commandButton value="Face Detect API 負荷生成" action="#{loadGenerator.sentRequestToFaceDetectService()}"/>
+    <p:commandButton value="Emotion API 切断" action="#{loadGenerator.killEmotionService()}"/>
+    <p:commandButton value="Emotion API 負荷生成" action="#{loadGenerator.sentRequestToEmotionService()}"/>
 </h:body>
 </html>
